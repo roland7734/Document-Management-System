@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Drive</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+<h1>Welcome, <span th:text="${user.username}"></span>!</h1>
+<h2>Current Path: <span th:text="${currentPath}"></span></h2>
+
+  <a th:if="${currentPath.length()>1}"
+     th:href="@{/drive(path=${#strings.substring(currentPath, 0, currentPath.lastIndexOf('/'))})}">
+    Return to Parent Directory
+  </a>
+
+  <br>
+<br>
+
+<h3>Folders</h3>
+<ul>
+  <li th:each="folder : ${folders}">
+    <a th:href="@{/drive(path=${currentPath.length() != 1 ? currentPath + '/' + folder : currentPath + folder})}" th:text="${folder}"></a>
+    <form th:action="@{/drive/delete}" method="post" style="display: inline;">
+      <input type="hidden" th:value="${relativePath}" name="currentPath">
+      <input type="hidden" th:value="${folder}" name="name">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+</ul>
+
+<h3>Documents</h3>
+<ul>
+  <li th:each="document : ${documents}">
+    <span th:text="${document}"></span>
+    <a th:href="@{/drive/download(name=${document}, currentPath=${relativePath})}">Download</a>
+    <a th:href="@{/drive/view(name=${document}, currentPath=${relativePath})}" >View</a>
+
+    <form th:action="@{/drive/delete}" method="post" style="display: inline;">
+      <input type="hidden" th:value="${relativePath}" name="currentPath">
+      <input type="hidden" th:value="${document}" name="name">
+      <button type="submit">Delete</button>
+    </form>
+
+    <form th:action="@{/drive/summarize}" method="post" style="display: inline;">
+      <input type="hidden" th:value="${relativePath}" name="currentPath">
+      <input type="hidden" th:value="${document}" name="content">
+      <button type="submit">Summarize</button>
+    </form>
+
+    <form th:action="@{/drive/classify}" method="post" style="display: inline;">
+      <input type="hidden" th:value="${relativePath}" name="currentPath">
+      <input type="hidden" th:value="${document}" name="content">
+      <input type="hidden" th:value="${folders}" name="folders">
+      <button type="submit">Classify</button>
+    </form>
+  </li>
+</ul>
+
+<div class="modal fade" id="classificationModal" tabindex="-1" aria-labelledby="classificationModalLabel" aria-hidden="true" th:if="${classificationMessage}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classificationModalLabel">Document Classification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p th:text="${classificationMessage}"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" th:if="${errorMessage}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p th:text="${errorMessage}"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Add Folder</h3>
+<form th:action="@{/drive/add-folder}" method="post">
+  <input type="text" name="name" placeholder="Folder Name">
+  <input type="hidden" th:value="${relativePath}" name="currentPath">
+  <button type="submit">Add</button>
+</form>
+<br>
+<h3>Upload Document</h3>
+<form th:action="@{/drive/upload-document}" method="post" enctype="multipart/form-data">
+  <input type="file" name="file">
+  <input type="hidden" th:value="${relativePath}" name="currentPath">
+  <button type="submit">Upload</button>
+</form>
+
+<br>
+
+<form th:action="@{/logout}" method="post" style="display: inline;">
+  <button type="submit" class="btn btn-danger">Logout</button>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modalElement = document.getElementById("classificationModal");
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+    const errorModalElement = document.getElementById("errorModal");
+    if (errorModalElement) {
+      const errorModal = new bootstrap.Modal(errorModalElement);
+      errorModal.show();
+    }
+  });
+</script>
+</div>
+</body>
+</html>

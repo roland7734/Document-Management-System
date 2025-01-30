@@ -1,0 +1,120 @@
+https://drive.google.com/drive/folders/1TYxNGW_XStI1qombdRTzxDqDY3W8XkCL
+
+
+
+
+
+
+
+
+
+
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+
+set(ignore_option_dependencies). % GUI handles dependencies
+
+if(Prover9). % Options for Prover9
+  assign(max_seconds, 60).
+end_if.
+
+if(Mace4).   % Options for Mace4
+  assign(max_seconds, 60).
+end_if.
+
+formulas(assumptions).
+
+diferite(a,b). % casa a != b
+diferite(a,c).
+diferite(a,d).
+diferite(a,e).
+diferite(b,c).
+diferite(b,d).
+diferite(b,e).
+diferite(c,d).
+diferite(c,e).
+diferite(d,e).
+diferite(x,y) -> diferite(y,x).
+
+vecinDreapta(a,b).
+vecinDreapta(b,c).
+vecinDreapta(c,d).
+vecinDreapta(d,e).
+-vecinDreapta(a,a).
+-vecinDreapta(a,c).
+-vecinDreapta(a,d).
+-vecinDreapta(a,e).
+-vecinDreapta(b,a).
+-vecinDreapta(b,b).
+-vecinDreapta(b,d).
+-vecinDreapta(c,a).
+-vecinDreapta(c,b).
+-vecinDreapta(c,c).
+-vecinDreapta(c,e).
+-vecinDreapta(d,a).
+-vecinDreapta(d,b).
+-vecinDreapta(d,c).
+-vecinDreapta(d,d).
+-vecinDreapta(e,a).
+-vecinDreapta(e,b).
+-vecinDreapta(e,c).
+-vecinDreapta(e,d).
+-vecinDreapta(e,e).
+vecin(x,y) <-> vecinDreapta(x,y) | vecinDreapta(y,x).
+
+austriac(x) | belgian(x) | ceh(x) | danez(x) | estonian(x).
+bere(x) | cidru(x) | vin(x) | advocaat(x) | daiquiri(x).
+pisica(x) | caine(x) | vultur(x) | magar(x) | aligator(x).
+dacia(x) | bugatti(x) | cadillac(x) | astonMartin(x) | edonis(x).
+bej(x) | chihlimbar(x) | verdeS(x) | albastru(x) | cyan(x).
+
+austriac(x) & austriac(y) -> -diferite(x,y).
+belgian(x) & belgian(y) -> -diferite(x,y).
+ceh(x) & ceh(y) ->  -diferite(x,y).
+danez(x) & danez(y) -> -diferite(x,y).
+estonian(x) &  estonian(y) -> -diferite(x,y).
+
+bere(x) & bere(y)  -> -diferite(x,y).
+cidru(x) & cidru(y) -> -diferite(x,y).
+vin(x) & vin(y) ->  -diferite(x,y).
+advocaat(x) & advocaat(y) -> -diferite(x,y).
+daiquiri(x) & daiquiri(y) -> -diferite(x,y).
+
+pisica(x) & pisica(y) -> -diferite(x,y).
+ caine(x)  &  caine(y)  -> -diferite(x,y).
+vultur(x) & vultur(y) ->  -diferite(x,y).
+magar(x) & magar(y) -> -diferite(x,y).
+aligator(x) & aligator(y) -> -diferite(x,y).
+
+dacia(x) & dacia(y) -> -diferite(x,y).
+bugatti(x) & bugatti(y) -> -diferite(x,y).
+cadillac(x) & cadillac(y) ->  -diferite(x,y).
+astonMartin(x) & astonMartin(y) -> -diferite(x,y).
+edonis(x) & edonis(y) -> -diferite(x,y).
+
+bej(x) & bej(y) -> -diferite(x,y).
+chihlimbar(x) & chihlimbar(y) -> -diferite(x,y).
+verdeS(x) & verdeS(y) ->  -diferite(x,y).
+albastru(x)  & albastru(y)  -> -diferite(x,y).
+cyan(x) & cyan(y) -> -diferite(x,y).
+
+austriac(x) <-> chihlimbar(x).
+cidru(c).
+belgian(x) <-> caine(x).
+ceh(a).
+dacia(x) & vultur(y) -> vecin(x,y).
+ceh(x) & albastru(y) -> vecin(x,y).
+bugatti(x)  <-> pisica(x).
+bej(x) <-> cadillac(x).
+advocaat(x) <-> cyan(x).
+danez(x) <-> vin(x).
+estonian(x) <-> edonis(x).
+cadillac(x) & magar(y) -> vecin(x,y).
+cyan(x) & verdeS(y) -> vecinDreapta(y,x).
+astonMartin(x) <-> daiquiri(x).
+
+end_of_list.
+
+formulas(goals).
+
+end_of_list.
+

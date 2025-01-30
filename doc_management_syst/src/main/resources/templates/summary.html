@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Document Summary</title>
+</head>
+<body>
+<h1>Summary for: <span th:text="${documentName}"></span></h1>
+<p th:text="${summary}"></p>
+
+<a th:href="@{/drive(path=${currentPath})}">Back to Drive</a>
+</body>
+</html>

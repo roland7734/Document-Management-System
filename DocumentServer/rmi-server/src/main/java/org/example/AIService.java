@@ -35,7 +35,7 @@ public class AIService {
 
         Request request = new Request.Builder()
                 .url(apiUrl)
-                .addHeader("Authorization", "Bearer " + "api_key")
+                .addHeader("Authorization", "Bearer " + api_key)
                 .post(RequestBody.create(payloadJson, MediaType.parse("application/json")))
                 .build();
 
@@ -68,7 +68,7 @@ public class AIService {
 
         Request request = new Request.Builder()
                 .url(apiUrl)
-                .addHeader("Authorization", "Bearer " + "api_key")
+                .addHeader("Authorization", "Bearer " + api_key)
                 .post(RequestBody.create(payloadJson, MediaType.parse("application/json")))
                 .build();
 
